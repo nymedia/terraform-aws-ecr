@@ -4,6 +4,15 @@ variable "use_fullname" {
   description = "Set 'true' to use `namespace-stage-name` for ecr repository name, else `name`"
 }
 
+variable "use_context_as_prefix" {
+  type        = bool
+  default     = false
+  description = <<EOL
+    Set to 'true' to use the `namespace-stage-name/` as prefix of the ecr image.
+    It is recommended to provide `image_names` and set `use_fullname` to false in this case.
+  EOL
+}
+
 variable "principals_full_access" {
   type        = list(string)
   description = "Principal ARNs to provide with full access to the ECR"

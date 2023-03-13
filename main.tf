@@ -6,12 +6,13 @@ locals {
 
 locals {
   _name       = var.use_fullname ? module.this.id : module.this.name
+  name_prefix = var.use_context_as_prefix ? "${module.this.id}/" : ""
   image_names = length(var.image_names) > 0 ? var.image_names : [local._name]
 }
 
 resource "aws_ecr_repository" "name" {
   for_each             = toset(module.this.enabled ? local.image_names : [])
-  name                 = each.value
+  name                 = "${local.name_prefix}${each.value}"
   image_tag_mutability = var.image_tag_mutability
   force_delete         = var.force_delete
 
